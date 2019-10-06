@@ -1,0 +1,10 @@
+{
+    "routes": [
+        { "name": "index.html" }
+    ],
+    "target": "out",
+    "pygments": {
+        "style": "vs",
+        "filename": "syntax.css"
+    }
+}

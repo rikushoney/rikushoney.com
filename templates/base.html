@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>{% block title %}{% endblock %}</title>
+<link rel="stylesheet" href="style.css">
+{% if pygments_filename %}
+<link rel="stylesheet" href="{{ pygments_filename }}">
+{% endif %}
+</head>
+<body>
+{% block content %}
+{% endblock %}
+</body>
+</html>
