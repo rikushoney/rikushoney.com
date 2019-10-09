@@ -1,6 +1,7 @@
 {
     "routes": [
-        { "name": "index.html" }
+        { "name": "index.html" },
+        { "name": "about.html" }
     ],
     "target": "out",
     "pygments": {
