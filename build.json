@@ -1,10 +1,5 @@
 {
     "routes": [
-        { "name": "index.html" }
-    ],
-    "target": "out",
-    "pygments": {
-        "style": "vs",
-        "filename": "syntax.css"
-    }
+        { "template": "index.html", "target": "index.html" }
+    ]
 }

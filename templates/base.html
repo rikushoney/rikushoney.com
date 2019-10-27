@@ -2,10 +2,8 @@
 <html>
 <head>
 <title>{% block title %}{% endblock %}</title>
-<link rel="stylesheet" href="style.css">
-{% if pygments_filename %}
-<link rel="stylesheet" href="{{ pygments_filename }}">
-{% endif %}
+<link rel="stylesheet" href="static/style.css">
+<link rel="stylesheet" href="static/syntax.css">
 </head>
 <body>
 {% block content %}
