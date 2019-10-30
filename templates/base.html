@@ -2,8 +2,8 @@
 <html>
 <head>
 <title>{% block title %}{% endblock %}</title>
-<link rel="stylesheet" href="static/style.css">
-<link rel="stylesheet" href="static/syntax.css">
+<link rel="stylesheet" href="{{ url_for('style.css', 'styles') }}">
+<link rel="stylesheet" href="{{ url_for('syntax.css', 'styles') }}">
 </head>
 <body>
 {% block content %}

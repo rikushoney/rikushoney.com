@@ -1,5 +1,3 @@
-from typing import Dict
-
 import click
 
 GLOBAL_CONTEXT_SETTINGS = {
@@ -20,41 +18,34 @@ def main():
               help="Output directory of website")
 @click.option("--config", "-c", default="build.json", show_default=True,
               help="Config file to read build configuration from")
-def make(out: str, base: str, config: str):
-    import json
-    import os
+def website(out: str, base: str, config: str):
+    try:
+        import os
 
-    out_path = os.path.abspath(out)
-    base_path = os.path.abspath(base)
-    config_file = os.path.abspath(config)
+        out_path = os.path.abspath(out)
+        base_path = os.path.abspath(base)
+        config_file = os.path.abspath(config)
 
-    if not os.path.exists(config_file):
-        raise click.ClickException("No config file found")
+        if not os.path.exists(config_file):
+            raise click.ClickException("No config file found")
 
-    if not os.path.exists(out_path):
-        os.mkdir(out_path)
+        if not os.path.exists(out_path):
+            os.mkdir(out_path)
 
-    cfg: Dict = {}
-    with open(config_file, "r") as f:
-        cfg = json.load(f)
+        from .config_parser import ConfigParser
+        cfg = ConfigParser(config)
 
-    if "routes" not in cfg:
-        raise click.ClickException("No routes specified")
+        if not cfg.has("routes"):
+            raise click.ClickException("No routes specified")
 
-    # Inject base path
-    for template in cfg["routes"]:
-        template["target"] = os.path.join(out_path, template["target"])
+        from .jinja_build import JinjaBuild
 
-    from .build import JinjaBuild
+        jinja = JinjaBuild(os.path.join(base_path, "templates"), out_path)
+        jinja.render_templates(cfg["routes"])
 
-    # TODO: inject static path into templates
-    jinja = JinjaBuild(os.path.join(base_path, "templates"))
-    jinja.stream_templates(cfg["routes"])
+        from .static_build import StaticBuild
 
-    from shutil import copytree, rmtree
-
-    rmtree(os.path.join(out_path, "static"))
-
-    copytree(
-        os.path.join(base_path, "static"),
-        os.path.join(out_path, "static"))
+        static = StaticBuild(os.path.join(base_path, "static"), out_path)
+        static.copy_content()
+    except Exception as error:
+        raise click.ClickException(str(error))

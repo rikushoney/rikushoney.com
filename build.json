@@ -1,5 +1,5 @@
 {
     "routes": [
-        { "template": "index.html", "target": "index.html" }
+        { "template": "index.html" }
     ]
 }
