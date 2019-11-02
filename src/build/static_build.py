@@ -1,14 +1,14 @@
 import os
+import pathlib
 import shutil
 
 
 class StaticBuild:
-    def __init__(self, static, out):
+    def __init__(self, static):
         self._static = static
-        self._out = out
 
-    def copy_content(self):
-        StaticBuild.copy_recursively(self._static, self._out)
+    def copy_content(self, outpath):
+        StaticBuild.copy_recursively(self._static, outpath)
 
     @staticmethod
     def copy_recursively(source, dest):
@@ -18,8 +18,9 @@ class StaticBuild:
         source = os.path.abspath(source)
         dest = os.path.abspath(dest)
 
-        if not os.path.exists(dest):
-            os.mkdir(dest)
+        path = pathlib.Path(dest)
+        if not path.exists():
+            path.mkdir(parents=True, exist_ok=True)
 
         for file in os.listdir(source):
             file_abs = os.path.join(source, file)

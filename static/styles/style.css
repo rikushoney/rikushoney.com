@@ -3,3 +3,25 @@ body {
     margin: 0 auto;
     font-family: Tahoma, Verdana, Arial, sans-serif;
 }
+
+a {
+    color: blue;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration-line: underline;
+}
+
+a:visited {
+    color: blue;
+}
+
+.links {
+    display: flex;
+    justify-content: space-around;
+}
+
+.links div a {
+    margin: auto;
+}

@@ -1,5 +1,6 @@
 {
     "routes": [
-        { "template": "index.html" }
+        { "template": "index.html" },
+        { "template": "about.html" }
     ]
 }

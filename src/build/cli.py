@@ -38,14 +38,20 @@ def website(out: str, base: str, config: str):
         if not cfg.has("routes"):
             raise click.ClickException("No routes specified")
 
+        from .pygments_build import PygmentsBuild
+
+        pygments = PygmentsBuild()
+        pygments.make_stylefile(os.path.join(out_path, "styles", "syntax.css"))
+
         from .jinja_build import JinjaBuild
 
-        jinja = JinjaBuild(os.path.join(base_path, "templates"), out_path)
-        jinja.render_templates(cfg["routes"])
+        jinja = JinjaBuild(os.path.join(base_path, "templates"))
+        jinja.render_templates(out_path, cfg["routes"])
 
         from .static_build import StaticBuild
 
-        static = StaticBuild(os.path.join(base_path, "static"), out_path)
-        static.copy_content()
+        static = StaticBuild(os.path.join(base_path, "static"))
+        static.copy_content(out_path)
     except Exception as error:
-        raise click.ClickException(str(error))
+        raise error
+        # raise click.ClickException(str(error))

@@ -2,11 +2,17 @@
 <html>
 <head>
 <title>{% block title %}{% endblock %}</title>
-<link rel="stylesheet" href="{{ url_for('style.css', 'styles') }}">
-<link rel="stylesheet" href="{{ url_for('syntax.css', 'styles') }}">
+<link rel="stylesheet" href="styles/style.css">
+<link rel="stylesheet" href="styles/syntax.css">
 </head>
 <body>
 {% block content %}
 {% endblock %}
+<br/>
+<div class="links">
+    <div><a href="about.html">About me</a></div>
+    <div><a href="cv.html">Curriculum vitae</a></div>
+    <div><a href="http://github.com/riksuh/">My github</a></div>
+</div>
 </body>
 </html>

@@ -4,16 +4,10 @@ import os
 
 
 class JinjaBuild():
-    def __init__(self, environment, out):
+    def __init__(self, environment):
         self._environment = Environment(
             loader=FileSystemLoader(environment)
         )
-        self._out = out
-
-        def url_for_wrapper(file, directory=""):
-            return self.url_for(file, directory)
-
-        self._environment.globals["url_for"] = url_for_wrapper
 
     def render_template(self, template, target):
         """
@@ -25,7 +19,7 @@ class JinjaBuild():
             target if os.path.isabs(target) else os.path.join(self._out, target)
         )
 
-    def render_templates(self, templates):
+    def render_templates(self, outpath, templates):
         """
         Renders a list of templates to their respective targets using :func:``render_template``
         The list must be in the format:
@@ -40,9 +34,6 @@ class JinjaBuild():
         for template in templates:
             self.render_template(
                 template["template"],
-                os.path.join(self._out, template["target"]) if "target" in template
-                else os.path.join(self._out, template["template"])
+                os.path.join(outpath, template["target"]) if "target" in template
+                else os.path.join(outpath, template["template"])
             )
-
-    def url_for(self, file, directory):
-        return os.path.join(directory, file)
