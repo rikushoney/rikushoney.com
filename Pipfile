@@ -8,6 +8,8 @@ markdown = "*"
 jinja2 = "*"
 pygments = "*"
 click = "*"
+livereload = "*"
+libsass = "*"
 
 [dev-packages]
 

@@ -1,8 +1,26 @@
 import click
+import functools
+import livereload
+import os
+
+from .build import build_website
 
 GLOBAL_CONTEXT_SETTINGS = {
     "help_option_names": ["-h", "--help"]
 }
+
+
+def common_params(func):
+    @click.option("--base", "-b", default=".", show_default=True,
+                  help="The directory to load templates and static files from")
+    @click.option("--out", "-o", default="out", show_default=True,
+                  help="Output directory of website")
+    @click.option("--config", "-c", default="build.json", show_default=True,
+                  help="Config file to read build configuration from")
+    @functools.wraps(func)
+    def wrapper(*args, **kwargs):
+        return func(*args, **kwargs)
+    return wrapper
 
 
 @click.group(context_settings=GLOBAL_CONTEXT_SETTINGS)
@@ -10,48 +28,31 @@ def main():
     pass
 
 
+def sanetize_args(out, base, config):
+    return os.path.abspath(out), os.path.abspath(base), os.path.abspath(config)
+
+
 @main.command(context_settings=GLOBAL_CONTEXT_SETTINGS,
               help="Render the website")
-@click.option("--base", "-b", default=".", show_default=True,
-              help="The directory to load templates and static files from")
-@click.option("--out", "-o", default="out", show_default=True,
-              help="Output directory of website")
-@click.option("--config", "-c", default="build.json", show_default=True,
-              help="Config file to read build configuration from")
-def website(out: str, base: str, config: str):
-    try:
-        import os
+@common_params
+def build(out, base, config):
+    build_website(*sanetize_args(out, base, config))
 
-        out_path = os.path.abspath(out)
-        base_path = os.path.abspath(base)
-        config_file = os.path.abspath(config)
 
-        if not os.path.exists(config_file):
-            raise click.ClickException("No config file found")
+@main.command(context_settings=GLOBAL_CONTEXT_SETTINGS,
+              help="Start a live debug server")
+@common_params
+@click.option("--port", "-p", default=5500, show_default=True,
+              help="Port to bind the server to")
+def live(port: str, out: str, base: str, config: str):
+    server = livereload.Server()
 
-        if not os.path.exists(out_path):
-            os.mkdir(out_path)
+    def rebuild():
+        build_website(*sanetize_args(out, base, config))
 
-        from .config_parser import ConfigParser
-        cfg = ConfigParser(config)
-
-        if not cfg.has("routes"):
-            raise click.ClickException("No routes specified")
-
-        from .pygments_build import PygmentsBuild
-
-        pygments = PygmentsBuild()
-        pygments.make_stylefile(os.path.join(out_path, "styles", "syntax.css"))
-
-        from .jinja_build import JinjaBuild
-
-        jinja = JinjaBuild(os.path.join(base_path, "templates"))
-        jinja.render_templates(out_path, cfg["routes"])
-
-        from .static_build import StaticBuild
-
-        static = StaticBuild(os.path.join(base_path, "static"))
-        static.copy_content(out_path)
-    except Exception as error:
-        raise error
-        # raise click.ClickException(str(error))
+    rebuild()
+    # TODO: get these from args
+    server.watch("build.json", func=rebuild)
+    server.watch("static", func=rebuild)
+    server.watch("templates", func=rebuild)
+    server.serve(port=port, root=out)

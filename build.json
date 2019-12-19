@@ -1,6 +1,10 @@
 {
+    "templates-dir": "templates/",
     "routes": [
         { "template": "index.html" },
-        { "template": "about.html" }
-    ]
+        { "template": "about.html", "target": "about/index.html" },
+        { "template": "cv.html", "target": "cv/index.html" }
+    ],
+    "static-dir": "assets/static/",
+    "styles-dir": "assets/styles/"
 }

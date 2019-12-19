@@ -10,11 +10,12 @@ setup(
         "click",
         "markdown",
         "pygments",
-        "jinja2"
+        "jinja2",
+        "livereload"
     ],
     entry_points={
         "console_scripts": [
-            "build = build.cli:main"
+            "website = build.cli:main"
         ]
     }
 )
