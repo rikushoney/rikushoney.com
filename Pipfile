@@ -10,8 +10,13 @@ pygments = "*"
 click = "*"
 livereload = "*"
 libsass = "*"
+pyyaml = "*"
 
 [dev-packages]
 
 [requires]
-python_version = "3.7"
+python_version = "3.8"
+
+[packages.e1839a8]
+path = "."
+editable = true

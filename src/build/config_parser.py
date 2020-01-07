@@ -1,7 +1,7 @@
 from typing import Dict, Union
 
 import copy
-import json
+import yaml
 
 
 class ConfigParser:
@@ -13,7 +13,7 @@ class ConfigParser:
         self._config: Dict = {}
         if isinstance(config, str):
             with open(config, "r") as f:
-                self._config = json.load(f)
+                self._config = yaml.load(f, Loader=yaml.SafeLoader)
         elif isinstance(config, dict):
             self._config = copy.copy(config)
         else:

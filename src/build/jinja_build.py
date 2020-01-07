@@ -21,15 +21,7 @@ class JinjaBuild():
 
     def render_templates(self, outpath, templates):
         """
-        Renders a list of templates to their respective targets using :func:``render_template``
-        The list must be in the format:
-
-            [
-                { "template": "example-template.html", "target": "example.html" },
-                { "template": "example2-template.html", "target": "example2.html" }
-            ]
-
-        If ``target`` is omitted, ``template`` will be used as the output filename
+        Renders a list of templates
         """
         for template in templates:
             self.render_template(

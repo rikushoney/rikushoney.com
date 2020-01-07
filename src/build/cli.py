@@ -15,7 +15,7 @@ def common_params(func):
                   help="The directory to load templates and static files from")
     @click.option("--out", "-o", default="out", show_default=True,
                   help="Output directory of website")
-    @click.option("--config", "-c", default="build.json", show_default=True,
+    @click.option("--config", "-c", default="build.yaml", show_default=True,
                   help="Config file to read build configuration from")
     @functools.wraps(func)
     def wrapper(*args, **kwargs):
@@ -47,12 +47,14 @@ def build(out, base, config):
 def live(port: str, out: str, base: str, config: str):
     server = livereload.Server()
 
+    out, base, config = sanetize_args(out, base, config)
+
     def rebuild():
-        build_website(*sanetize_args(out, base, config))
+        build_website(out, base, config)
 
     rebuild()
-    # TODO: get these from args
-    server.watch("build.json", func=rebuild)
-    server.watch("static", func=rebuild)
-    server.watch("templates", func=rebuild)
+
+    server.watch(config, func=rebuild)
+    server.watch(os.path.join(base, "assets"), func=rebuild)
+    server.watch(os.path.join(base, "templates"), func=rebuild)
     server.serve(port=port, root=out)

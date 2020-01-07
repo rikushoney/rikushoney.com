@@ -15,7 +15,7 @@ def build_website(out: str, base: str, config: str):
 
     ``base`` is the directory where all the source files rely
 
-    ``config`` is a JSON-formatted file which contains all the "routes"
+    ``config`` is a YAML-formatted file which contains all the "routes"
     and directories where different source files are located are defined
     """
     cfg = ConfigParser(config)

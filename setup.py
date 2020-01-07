@@ -11,7 +11,8 @@ setup(
         "markdown",
         "pygments",
         "jinja2",
-        "livereload"
+        "livereload",
+        "pyyaml"
     ],
     entry_points={
         "console_scripts": [
