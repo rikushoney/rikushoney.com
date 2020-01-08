@@ -50,7 +50,10 @@ def live(port: str, out: str, base: str, config: str):
     out, base, config = sanetize_args(out, base, config)
 
     def rebuild():
-        build_website(out, base, config)
+        try:
+            build_website(out, base, config)
+        except Exception as e:
+            print(str(e))
 
     rebuild()
 
