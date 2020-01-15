@@ -1,16 +1,23 @@
 @import 'system-font';
 @import 'code-font';
+@import 'colours';
+@import 'macros';
 
 * {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
+}
+
+a {
+    text-decoration: none;
 }
 
 body {
-    background-color: white;
+    background-color: $light;
     margin: 0 auto;
     font: 1em/1.6 system-ui;
-    max-width: 1440px;
+    width: 100%;
 }
 
 code {
