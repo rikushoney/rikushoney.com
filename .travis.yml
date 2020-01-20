@@ -1,0 +1,12 @@
+language: python
+addons:
+    apt:
+        update: true
+
+install:
+    - pip install pipenv
+    - pipenv install
+
+script:
+    - website live
+    - cat out/
