@@ -1,4 +1,7 @@
 language: python
+python:
+    - "3.8"
+
 addons:
     apt:
         update: true
@@ -8,5 +11,5 @@ install:
     - pipenv install
 
 script:
-    - website live
+    - website build
     - cat out/
