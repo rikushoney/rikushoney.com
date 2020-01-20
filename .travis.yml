@@ -5,9 +5,11 @@ python:
 addons:
     apt:
         update: true
+    packages:
+        - tree
 install:
     - pip install pipenv
     - pipenv install
 script:
     - website build
-    - ls out/
+    - tree out/
