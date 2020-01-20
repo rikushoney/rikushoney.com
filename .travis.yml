@@ -5,8 +5,8 @@ python:
 addons:
     apt:
         update: true
-    packages:
-        - tree
+        packages:
+            - tree
 install:
     - pip install pipenv
     - pipenv install
