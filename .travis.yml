@@ -1,15 +1,13 @@
+dist: bionic
 language: python
 python:
     - "3.8"
-
 addons:
     apt:
         update: true
-
 install:
     - pip install pipenv
     - pipenv install
-
 script:
     - website build
-    - cat out/
+    - ls out/

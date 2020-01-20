@@ -23,11 +23,14 @@ def build_website(out: str, base: str, config: str):
     pygments = PygmentsBuild()
     pygments.make_stylefile(join_paths(out, "styles", "syntax.css"))
 
-    scss = SassBuild(join_paths(base, cfg["styles-dir"]))
-    scss.compile_styles(join_paths(out, "styles"))
+    if cfg.has("styles-dir"):
+        scss = SassBuild(join_paths(base, cfg["styles-dir"]))
+        scss.compile_styles(join_paths(out, "styles"))
 
-    jinja = JinjaBuild(join_paths(base, cfg["templates-dir"]))
-    jinja.render_templates(out, cfg["routes"])
+    if cfg.has("templates-dir"):
+        jinja = JinjaBuild(join_paths(base, cfg["templates-dir"]))
+        jinja.render_templates(out, cfg["routes"])
 
-    static = StaticBuild(join_paths(base, cfg["static-dir"]))
-    static.copy_content(out)
+    if cfg.has("static-dir"):
+        static = StaticBuild(join_paths(base, cfg["static-dir"]))
+        static.copy_content(out)

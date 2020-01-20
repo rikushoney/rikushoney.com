@@ -4,5 +4,5 @@ routes:
 - template: index.html
 - template: cv.html
   target: cv/index.html
-static-dir: assets/static/
+# static-dir: assets/static/
 styles-dir: assets/styles/
