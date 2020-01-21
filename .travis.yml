@@ -1,0 +1,26 @@
+dist: bionic
+language: python
+python:
+    - "3.7.3"
+addons:
+    apt:
+        update: true
+        packages:
+            - tree
+install:
+    - pip install pipenv
+    - pipenv install
+    - nvm install --lts
+    - npm install netlify-cli -g
+script:
+    - website website
+    - tree out/
+deploy:
+    - provider: script
+      script: netlify deploy --dir=out
+      on:
+          branch: master
+    - provider: script
+      script: netlify deploy --dir=out --prod
+      on:
+          branch: production
