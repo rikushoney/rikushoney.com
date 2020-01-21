@@ -1,7 +1,7 @@
 dist: bionic
 language: python
 python:
-    - "3.8"
+    - "3.8.0"
 addons:
     apt:
         update: true
@@ -10,6 +10,19 @@ addons:
 install:
     - pip install pipenv
     - pipenv install
+    - nvm install --lts
+    - npm install netlify-cli -g
 script:
     - website build
     - tree out/
+deploy:
+    - provider: script
+      script: netlify deploy --dir=out
+      skip-cleanup: true
+      on:
+          branch: master
+    - provider: script
+      script: netlify deploy --dir=out --prod
+      skip-cleanup: true
+      on:
+          branch: production
