@@ -18,9 +18,11 @@ script:
 deploy:
     - provider: script
       script: netlify deploy --dir=out
+      skip-cleanup: true
       on:
           branch: master
     - provider: script
       script: netlify deploy --dir=out --prod
+      skip-cleanup: true
       on:
           branch: production
