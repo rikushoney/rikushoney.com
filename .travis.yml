@@ -13,7 +13,7 @@ install:
     - nvm install --lts
     - npm install netlify-cli -g
 script:
-    - website website
+    - build website
     - tree out/
 deploy:
     - provider: script
