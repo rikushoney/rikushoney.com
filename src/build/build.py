@@ -12,12 +12,13 @@ def build_website(out: str, base: str, config: str):
     """
     As the name suggests, build the website.
 
-    ``out`` is the directory where the final files of the website will be placed
+    ``out`` is the directory where all the rendered and static files of the
+    website will be placed.
 
-    ``base`` is the directory where all the source files rely
+    ``base`` is the top-level directory for all the source files.
 
-    ``config`` is a YAML-formatted file which contains all the "routes"
-    and directories where different source files are located are defined
+    ``config`` is a YAML-formatted file which contains the recipes for building
+    the website
     """
     cfg = ConfigParser(config)
 
@@ -30,7 +31,7 @@ def build_website(out: str, base: str, config: str):
 
     if cfg.has("scripts-dir"):
         scripts = ScriptBuild(join_paths(base, cfg["scripts-dir"]))
-        scripts.minify_scripts(join_paths(out, "scripts/main.js"))
+        scripts.minify_scripts(join_paths(out, "scripts"))
 
     if cfg.has("templates-dir"):
         jinja = JinjaBuild(join_paths(base, cfg["templates-dir"]))

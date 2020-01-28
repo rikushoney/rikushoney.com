@@ -13,19 +13,15 @@ class StaticBuild:
     @staticmethod
     def copy_recursively(source, dest):
         """
-        Copies content in ``source`` to ``dest`` recursively overwriting existing files
+        Copies content from ``source`` to ``dest`` recursively overwriting existing files
         """
-        source = os.path.abspath(source)
-        dest = os.path.abspath(dest)
-
         path = pathlib.Path(dest)
         if not path.exists():
             path.mkdir(parents=True, exist_ok=True)
 
-        for file in os.listdir(source):
-            file_abs = os.path.join(source, file)
-            if os.path.isdir(file_abs):
+        for file in os.scandir(source):
+            if file.is_dir():
                 StaticBuild.copy_recursively(
-                    file_abs, os.path.join(dest, file))
+                    file.path, os.path.join(dest, file.name))
             else:
-                shutil.copy2(file_abs, dest)
+                shutil.copy2(file.path, dest)
