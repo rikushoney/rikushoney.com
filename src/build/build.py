@@ -4,6 +4,7 @@ from .config_parser import ConfigParser
 from .pygments_build import PygmentsBuild
 from .sass_build import SassBuild
 from .jinja_build import JinjaBuild
+from .script_build import ScriptBuild
 from .static_build import StaticBuild
 
 
@@ -26,6 +27,10 @@ def build_website(out: str, base: str, config: str):
     if cfg.has("styles-dir"):
         scss = SassBuild(join_paths(base, cfg["styles-dir"]))
         scss.compile_styles(join_paths(out, "styles"))
+
+    if cfg.has("scripts-dir"):
+        scripts = ScriptBuild(join_paths(base, cfg["scripts-dir"]))
+        scripts.minify_scripts(join_paths(out, "scripts/main.js"))
 
     if cfg.has("templates-dir"):
         jinja = JinjaBuild(join_paths(base, cfg["templates-dir"]))

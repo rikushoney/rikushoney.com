@@ -12,7 +12,8 @@ setup(
         "pygments",
         "jinja2",
         "livereload",
-        "pyyaml"
+        "pyyaml",
+        "calmjs.parse"
     ],
     entry_points={
         "console_scripts": [

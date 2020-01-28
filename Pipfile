@@ -4,13 +4,14 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-markdown = "*"
-jinja2 = "*"
-pygments = "*"
+Markdown = "*"
+Jinja2 = "*"
+Pygments = "*"
 click = "*"
 livereload = "*"
 libsass = "*"
-pyyaml = "*"
+PyYAML = "*"
+"calmjs.parse" = "*"
 
 [dev-packages]
 
