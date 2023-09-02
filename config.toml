@@ -1,0 +1,13 @@
+[website]
+name = "Rikus Honey website"
+author = "Rikus Honey"
+url = "rikushoney.com"
+
+[sections.education]
+title = "Education"
+
+[sections.work-experience]
+title = "Work experience"
+
+[sections.skills]
+title = "Skills"

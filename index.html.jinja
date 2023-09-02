@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="{{ website.name }}">
+  <meta name="author" content="{{ website.author }}">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>Rikus Honey</title>
+</head>
+
+<body>
+  <header>
+    <h1>Rikus Honey</h1>
+    <h3 class="monospace-font">rikushoney2 (at) gmail (dot) com</h3>
+  </header>
+  <main>
+    {% for section in sections %}
+    <section>
+      <h2>{{ section.title }}</h2>
+    </section>
+    {% endfor %}
+  </main>
+</body>
+
+</html>
